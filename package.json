@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "tsx src/simulator.ts",
     "dev": "tsx src/index.ts",
     "mqtt-test": "tsx src/mqtt-test.ts",
     "simulate": "tsx src/simulator.ts",
