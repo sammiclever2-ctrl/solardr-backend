@@ -1,5 +1,9 @@
 import "dotenv/config";
+import express from "express";
 import { createClient } from "@supabase/supabase-js";
+
+const app = express();
+const PORT = Number(process.env.PORT) || 3000;
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
@@ -38,8 +42,26 @@ async function publishReading() {
   console.table(reading);
 }
 
+// Health endpoint
+app.get("/", (_req, res) => {
+  res.send("SolarDR Simulator is running.");
+});
+
+app.get("/health", (_req, res) => {
+  res.status(200).json({
+    status: "ok",
+    simulator: "running",
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// Start HTTP server
+app.listen(PORT, () => {
+  console.log(`🌐 HTTP server listening on port ${PORT}`);
+});
+
+// Start simulator
 console.log("🚀 Simulator started");
 
 publishReading();
-
 setInterval(publishReading, 5000);
